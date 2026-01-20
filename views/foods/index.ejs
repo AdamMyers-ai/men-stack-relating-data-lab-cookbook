@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Pantry</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+
+    <h1>Welcome to My Pantry</h1>
+
+    <% if (pantry && pantry.length > 0) { %>
+    <ul>
+      <% pantry.forEach((recipe) => { %>
+      <li>
+        <strong><%= recipe.title %></strong><br />
+        <%= recipe.description %><br />
+        Prep:
+        <%= recipe.prepTimeMinutes %>
+        min<br />
+        Cook:
+        <%= recipe.cookTimeMinutes %>
+        min<br />
+        Total:
+        <%= recipe.totalTimeMinutes %>
+        min<br />
+        Servings:
+        <%= recipe.serving %><br />
+        Ingredients:
+        <%= recipe.ingredients %><br />
+        Instructions:
+        <%= recipe.instructions %><br />
+        Cuisine:
+        <%= recipe.cuisine %><br />
+        Difficulty:
+        <%= recipe.difficulty %><br />
+
+        <a href="/users/<%= userId %>/foods/<%= recipe._id %>/edit">
+          <button type="button">Edit</button>
+        </a>
+
+        <form
+          action="/users/<%= userId %>/foods/<%= recipe._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>There are no items in this pantry.</p>
+    <% } %>
+  </body>
+</html>
